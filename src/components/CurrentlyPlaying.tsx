@@ -15,7 +15,7 @@ const CurrentlyPlaying: React.FC<CurrentlyPlayingProps> = ({
   if (currentlyPlaying.currently_playing_type === 'track') {
     if (currentlyPlaying.item) {
       return (
-        <Track track={currentlyPlaying.item as SpotifyApi.TrackObjectFull} />
+        <Track track={currentlyPlaying.item as SpotifyApi.TrackObjectFull} isPlaying={currentlyPlaying.is_playing} />
       );
     }
 

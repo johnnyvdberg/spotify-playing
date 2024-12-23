@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthContext, AuthProvider } from 'react-oauth2-code-pkce';
 import type { TAuthConfig } from 'react-oauth2-code-pkce';
 
@@ -14,7 +15,7 @@ const authConfig: TAuthConfig = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
   tokenEndpoint: 'https://accounts.spotify.com/api/token',
   redirectUri: `${location.protocol}//${location.host}${location.pathname}`,
-  scope: 'user-read-currently-playing',
+  scope: 'user-read-currently-playing user-modify-playback-state',
 
   // Spotify token not a JWT.
   decodeToken: false,
@@ -31,16 +32,28 @@ const SecuredApp = () => {
   }
 
   if (token) {
-    return <App />;
+    return (
+      <div
+        className={AppEnv.VIRTUAL_CIRCULAR_BORDER ? 'round-display' : undefined}
+      >
+        <App />
+      </div>
+    );
   }
 
   return <Login />;
 };
 
-const WrappedSecuredApp = () => (
-  <AuthProvider authConfig={authConfig}>
-    <SecuredApp />
-  </AuthProvider>
-);
+const WrappedSecuredApp = () => {
+  const queryClient = new QueryClient();
+
+  return (
+    <AuthProvider authConfig={authConfig}>
+      <QueryClientProvider client={queryClient}>
+        <SecuredApp />
+      </QueryClientProvider>
+    </AuthProvider>
+  );
+};
 
 export default WrappedSecuredApp;

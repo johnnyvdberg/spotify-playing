@@ -32,3 +32,18 @@ h1, h2, h3, h4, h5, h6 {
     color: rgba(255, 255, 255, 0.87);
   }
 }
+
+.round-display {
+  width: 720px; /* Adjust the size as needed */
+  height: 720px; /* Equal width and height */
+  border-radius: 50%; /* Makes the element perfectly circular */
+  /*background-color: #4caf50; !* Example background color *!*/
+  display: flex; /* Center content inside (optional) */
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
+  border: 2px solid #ffffff; /* Optional border for better visibility */
+  color: #fff; /* Text color inside (if any) */
+  font-size: 1.2rem; /* Example font size */
+  font-weight: bold; /* Example font weight */
+}

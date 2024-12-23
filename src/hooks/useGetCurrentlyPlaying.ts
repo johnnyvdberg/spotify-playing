@@ -1,70 +1,43 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useContext } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { AuthContext } from 'react-oauth2-code-pkce';
 
-import useRequest from '../api/useRequest.ts';
 import AppEnv from '../AppEnv.ts';
-import useDeepEqualMemo from './useDeepEqualMemo.ts';
+
+const REFETCH_INTERVAL = Number(AppEnv.SPOTIFY_INTERVAL);
 
 const useGetCurrentlyPlaying = (enable: boolean) => {
   const { token } = useContext(AuthContext);
 
-  const getCurrentlyPlaying = useCallback(
-    () =>
-      axios
-        .get<SpotifyApi.CurrentlyPlayingObject | null>(
+  return useQuery({
+    queryKey: ['currently-playing'],
+    queryFn: async () => {
+      const response =
+        await axios.get<SpotifyApi.CurrentlyPlayingObject | null>(
           'https://api.spotify.com/v1/me/player/currently-playing',
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
-        )
-        .then((response) => {
-          if (response.status === 204) {
-            response.data = null;
-          }
+        );
 
-          if (response.data) {
-            // Clear some of the values that we don't care about, but which
-            // cause the object to change.
-            response.data.actions.disallows = {};
-            response.data.timestamp = 0;
-            response.data.progress_ms = 0;
-            response.data.is_playing = true;
-          }
-
-          return response;
-        }),
-    [token]
-  );
-
-  const { loading, previouslyLoaded, data, loadData } =
-    useRequest(getCurrentlyPlaying);
-
-  const currentlyPlaying =
-    useDeepEqualMemo<SpotifyApi.CurrentlyPlayingObject | null>(data);
-
-  useEffect(() => {
-    let id: number | undefined = undefined;
-
-    if (enable) {
-      id = setInterval(loadData, AppEnv.SPOTIFY_INTERVAL);
-      void loadData();
-    }
-
-    return () => {
-      if (id) {
-        clearInterval(id);
+      if (response.status === 204) {
+        response.data = null;
       }
-    };
-  }, [loadData, enable]);
+      if (response.data) {
+        // Clear some of the values that we don't care about, but which
+        // cause the object to change.
+        response.data.actions.disallows = {};
+        response.data.timestamp = 0;
+        response.data.progress_ms = 0;
+        // response.data.is_playing = true;
+      }
 
-  return {
-    loading,
-    previouslyLoaded,
-    currentlyPlaying,
-  };
+      return response.data;
+    },
+    enabled: enable,
+    refetchInterval: REFETCH_INTERVAL,
+  });
 };
 
 export default useGetCurrentlyPlaying;

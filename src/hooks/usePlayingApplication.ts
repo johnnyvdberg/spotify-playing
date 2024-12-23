@@ -5,11 +5,10 @@ import useScreenTimeout from './useScreenTimeout.ts';
 const usePlayingApplication = () => {
   const occupied = useOccupied();
 
-  const { loading, previouslyLoaded, currentlyPlaying } =
-    useGetCurrentlyPlaying(occupied);
+  const { data: currentlyPlaying, isLoading } = useGetCurrentlyPlaying(true); // FIXME Occupied
 
-  const showLoading = !currentlyPlaying && !previouslyLoaded && loading,
-    notPlaying = !(currentlyPlaying && occupied);
+  const showLoading = !currentlyPlaying && isLoading;
+  const notPlaying = !(currentlyPlaying && occupied);
 
   useScreenTimeout(notPlaying);
 

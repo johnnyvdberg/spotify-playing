@@ -15,6 +15,10 @@ interface IAppEnv {
   readonly ENABLE_OCCUPANCY: boolean;
 
   readonly PLAYING_USE_BLUR: boolean;
+
+  readonly VIRTUAL_CIRCULAR_BORDER: boolean;
+
+  readonly LAST_VIDEO_INDEX: number;
 }
 
 const AppEnv: IAppEnv = {
@@ -36,6 +40,12 @@ const AppEnv: IAppEnv = {
   ENABLE_OCCUPANCY: JSON.parse(import.meta.env.VITE_ENABLE_OCCUPANCY),
 
   PLAYING_USE_BLUR: JSON.parse(import.meta.env.VITE_PLAYING_USE_BLUR),
+
+  VIRTUAL_CIRCULAR_BORDER: JSON.parse(
+    import.meta.env.VITE_VIRTUAL_CIRCULAR_BORDER
+  ),
+
+  LAST_VIDEO_INDEX: Number(import.meta.env.VITE_LAST_VIDEO_INDEX),
 };
 
 export default AppEnv;

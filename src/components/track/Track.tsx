@@ -11,9 +11,10 @@ import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 interface TrackProps {
   track: SpotifyApi.TrackObjectFull;
+  isPlaying: boolean;
 }
 
-const Track: React.FC<TrackProps> = ({ track }) => {
+const Track: React.FC<TrackProps> = ({ track, isPlaying }) => {
   const { canvas, loadedUrl } = useImageCanvas(track.album.images[0].url);
 
   // Cache the old track until the image loads so all transitions happen at once.
@@ -30,7 +31,7 @@ const Track: React.FC<TrackProps> = ({ track }) => {
       <div className="currently-playing">
         {AppEnv.PLAYING_USE_BLUR ? <BackgroundBlurred /> : <BackgroundColor />}
 
-        <Content track={cachedTrack} />
+        <Content track={cachedTrack} isPlaying={isPlaying} />
       </div>
     </TrackImageProvider>
   );

@@ -5,6 +5,7 @@
 #root {
   padding: 0;
   text-align: center;
+  user-select: none;
 }
 
 .currently-playing {
@@ -61,7 +62,7 @@
       justify-content: center;
       align-items: center;
 
-      padding: 2cqh 6cqw;
+      padding: 2cqh 5cqw;
 
       font-size: 1cqi;
 
@@ -84,11 +85,22 @@
       }
     }
 
+    .currently-playing--controls {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+
+      max-width: 100vw;
+      height: auto;
+    }
+
     .currently-playing--image {
       box-shadow: 0 0 5cqw 0.5cqw rgba(32, 32, 32, 0.9);
       margin-bottom: 2.5cqi;
 
-      max-width: 78cqw;
+      max-width: 45cqw;
       height: auto;
       /*background-size: contain;*/
 
@@ -101,8 +113,8 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      line-height: 1.1;
-      width: 100%;
+      line-height: 1.2;
+      width: 80%;
     }
 
     /* Major third, ratio 1.250 */
@@ -133,6 +145,18 @@
       font-weight: 500;
     }
   }
+}
+
+.media-icon {
+  min-width: 6cqi;
+  width: 6cqi;
+  font-size: 5cqi;
+  font-weight: 700;
+  margin-block-start: 0.3em;
+
+  display: flex; /* Centering the icon */
+  justify-content: center;
+  align-items: center;
 }
 
 .current-playlist {

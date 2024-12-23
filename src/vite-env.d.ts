@@ -17,6 +17,10 @@ interface ImportMetaEnv {
   readonly VITE_ENABLE_OCCUPANCY: string;
 
   readonly VITE_PLAYING_USE_BLUR: string;
+
+  readonly VITE_VIRTUAL_CIRCULAR_BORDER: string;
+
+  readonly VITE_LAST_VIDEO_INDEX: number;
 }
 
 interface ImportMeta {
