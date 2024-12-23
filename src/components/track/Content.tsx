@@ -25,63 +25,63 @@ const Content: React.FC<ContentProps> = ({ track, isPlaying }) => {
   const trackImage = track.album.images[0];
 
   return (
-    <div className="currently-playing--content">
-      <div className="currently-playing--content--inner">
+    <div className="relative">
+      <div className="flex flex-col items-center justify-center px-[2cqh] py-[5cqw]">
         <canvas
-          ref={trackImageCanvasSubscriber('currently-playing--image')}
-          className="currently-playing--image"
+          ref={trackImageCanvasSubscriber('album-art')}
+          className="shadow-albumart mb-[5cqi] h-auto max-w-[45cqw]"
           style={{
             width: trackImage.width,
             aspectRatio: `${trackImage.width} / ${trackImage.height}`,
           }}
         />
 
-        <h1>{track.name}</h1>
-        <h2>{track.album.name}</h2>
+        <h1 className="text-title mb-2 w-4/5 truncate font-bold leading-tight">
+          {track.name}
+        </h1>
+        <h2 className="text-meta mb-2 w-4/5 truncate font-medium italic leading-tight">
+          {track.album.name}
+        </h2>
 
-        <h3>{track.artists.map((artist) => artist.name).join(', ')}</h3>
+        <h3 className="text-meta w-4/5 truncate font-medium leading-tight">
+          {track.artists.map((artist) => artist.name).join(', ')}
+        </h3>
       </div>
-      <div className="currently-playing--controls">
-        <div>
-          <span
-            className="media-icon"
+      <div className="flex w-full flex-row items-center justify-center gap-5">
+        <div
+          className="w-control min-w-control flex items-center justify-center gap-20 text-control font-bold"
+          onClick={() => {
+            previous.mutate();
+          }}
+        >
+          <FontAwesomeIcon icon={faBackwardFast} />
+        </div>
+        {isPlaying ? (
+          <div
+            className="w-control min-w-control flex items-center justify-center text-control font-bold"
             onClick={() => {
-              previous.mutate();
+              pausePlayback.mutate();
             }}
           >
-            <FontAwesomeIcon icon={faBackwardFast} />
-          </span>
-        </div>
-        <div>
-          {isPlaying ? (
-            <span
-              className="media-icon"
-              onClick={() => {
-                pausePlayback.mutate();
-              }}
-            >
-              <FontAwesomeIcon icon={faPause} />
-            </span>
-          ) : (
-            <span
-              className="media-icon"
-              onClick={() => {
-                resumePlayback.mutate();
-              }}
-            >
-              <FontAwesomeIcon icon={faPlay} />
-            </span>
-          )}
-        </div>
-        <div>
-          <span
-            className="media-icon"
+            <FontAwesomeIcon icon={faPause} />
+          </div>
+        ) : (
+          <div
+            className="w-control min-w-control flex items-center justify-center text-control font-bold"
             onClick={() => {
-              next.mutate();
+              resumePlayback.mutate();
             }}
           >
-            <FontAwesomeIcon icon={faForwardFast} />
-          </span>
+            <FontAwesomeIcon icon={faPlay} />
+          </div>
+        )}
+        <div
+          className="w-control min-w-control flex items-center justify-center text-control font-bold"
+          onClick={() => {
+            next.mutate();
+          }}
+        >
+          <FontAwesomeIcon icon={faForwardFast} />
         </div>
       </div>
     </div>

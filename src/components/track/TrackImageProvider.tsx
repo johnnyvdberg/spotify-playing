@@ -21,7 +21,6 @@ interface TrackImageProviderProps {
 const TrackImageProvider: React.FC<TrackImageProviderProps> = ({
   sourceCanvas,
   loadedUrl,
-
   children,
 }) => {
   const canvasRefs = useRef<Map<string, HTMLCanvasElement>>(new Map());

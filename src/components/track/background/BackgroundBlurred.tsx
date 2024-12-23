@@ -7,8 +7,8 @@ const BackgroundBlurred: React.FC = () => {
 
   return (
     <canvas
-      className="currently-playing--bg use-blur"
-      ref={trackImageCanvasSubscriber('currently-playing--bg')}
+      className="use-blur absolute bottom-0 left-0 right-0 top-0 size-full blur-3xl brightness-50"
+      ref={trackImageCanvasSubscriber('albumart-background')}
     />
   );
 };

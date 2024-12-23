@@ -28,9 +28,8 @@ const Track: React.FC<TrackProps> = ({ track, isPlaying }) => {
 
   return (
     <TrackImageProvider sourceCanvas={canvas} loadedUrl={loadedUrl}>
-      <div className="currently-playing">
+      <div className="relative flex h-screen w-screen items-center justify-center [container:currently-playing/inline-size]">
         {AppEnv.PLAYING_USE_BLUR ? <BackgroundBlurred /> : <BackgroundColor />}
-
         <Content track={cachedTrack} isPlaying={isPlaying} />
       </div>
     </TrackImageProvider>

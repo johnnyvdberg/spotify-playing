@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
-import screenfull from 'screenfull';
+import { useState } from 'react';
 import { useInterval } from 'usehooks-ts';
 
 import AppEnv from '../AppEnv.ts';
@@ -11,24 +9,18 @@ const Idle = () => {
   );
 
   useInterval(() => {
+    console.log('next');
     setActiveVideo(randomInt(1, AppEnv.LAST_VIDEO_INDEX));
   }, 20_000);
 
-  useEffect(() => {
-    screenfull
-      .request(document.querySelector('.react-player') ?? undefined)
-      .catch((reason) => {
-        console.log(reason);
-      });
-  }, []);
-
   return (
-    <div className="not-playing">
-      <ReactPlayer
-        playing
+    <div>
+      <video
+        className="fixed left-0 top-0 h-full w-[100vw] object-cover"
+        autoPlay
         muted
         loop
-        url={`http://localhost:5173/video/${activeVideo}.mp4`}
+        src={`http://localhost:5173/video/${activeVideo}.mp4`}
       />
     </div>
   );

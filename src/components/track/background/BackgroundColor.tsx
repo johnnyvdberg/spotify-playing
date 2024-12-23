@@ -10,7 +10,7 @@ const BackgroundColor: React.FC = () => {
 
   return (
     <div
-      className="currently-playing--bg use-color"
+      className="absolute bottom-0 left-0 right-0 top-0 size-full brightness-75"
       style={{
         backgroundColor: color ?? '#000000',
       }}

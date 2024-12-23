@@ -5,7 +5,7 @@ interface StatusProps {
 }
 
 const Status: React.FC<StatusProps> = ({ message }) => (
-  <div className="status">
+  <div className="text-control">
     <h1>{message}</h1>
   </div>
 );

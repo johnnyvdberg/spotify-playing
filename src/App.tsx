@@ -1,5 +1,3 @@
-import './App.css';
-
 import { useEffect } from 'react';
 import { useDebounceValue } from 'usehooks-ts';
 
@@ -9,7 +7,7 @@ import Status from './components/Status.tsx';
 import usePlayingApplication from './hooks/usePlayingApplication.ts';
 
 const App = () => {
-  const { currentlyPlaying, occupied, showLoading } = usePlayingApplication();
+  const { currentlyPlaying, showLoading } = usePlayingApplication();
   const [inactive, setValue] = useDebounceValue(false, 10_000);
 
   useEffect(() => {

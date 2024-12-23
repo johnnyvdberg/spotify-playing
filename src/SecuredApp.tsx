@@ -34,7 +34,11 @@ const SecuredApp = () => {
   if (token) {
     return (
       <div
-        className={AppEnv.VIRTUAL_CIRCULAR_BORDER ? 'round-display' : undefined}
+        className={
+          AppEnv.VIRTUAL_CIRCULAR_BORDER
+            ? 'flex size-[720px] items-center justify-center rounded-full border shadow-black'
+            : undefined
+        }
       >
         <App />
       </div>
