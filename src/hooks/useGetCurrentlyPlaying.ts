@@ -29,8 +29,6 @@ const useGetCurrentlyPlaying = (enable: boolean) => {
         // cause the object to change.
         response.data.actions.disallows = {};
         response.data.timestamp = 0;
-        response.data.progress_ms = 0;
-        // response.data.is_playing = true;
       }
 
       return response.data;
