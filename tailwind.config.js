@@ -15,6 +15,9 @@ export default {
         // Custom box-shadow using 5cqw and 0.5cqw
         albumart: '0 0 50px 5px rgba(32, 32, 32, 0.9)',
       },
+      transitionDuration: {
+        2000: '2000ms',
+      },
     },
   },
   plugins: [],

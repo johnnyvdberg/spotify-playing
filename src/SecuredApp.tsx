@@ -5,6 +5,7 @@ import type { TAuthConfig } from 'react-oauth2-code-pkce';
 
 import App from './App';
 import AppEnv from './AppEnv';
+import { CurrentlyPlayingProvider } from './components/CurrentlyPlayingContext.tsx';
 import Login from './components/Login.tsx';
 import Status from './components/Status.tsx';
 
@@ -40,7 +41,9 @@ const SecuredApp = () => {
             : undefined
         }
       >
-        <App />
+        <CurrentlyPlayingProvider enable>
+          <App />
+        </CurrentlyPlayingProvider>
       </div>
     );
   }

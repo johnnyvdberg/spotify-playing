@@ -13,7 +13,7 @@ import useTrackImageProvider from './useTrackImageProvider.ts';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 interface ContentProps {
-  track: TrackObjectFull;
+  track?: TrackObjectFull;
   isPlaying: boolean;
 }
 
@@ -22,34 +22,37 @@ const Content: React.FC<ContentProps> = ({ track, isPlaying }) => {
   const { pausePlayback, resumePlayback, previous, next } =
     useSpotifyMutations();
 
+  if (!track) {
+    return <h1>Unknown state</h1>;
+  }
   const trackImage = track.album.images[0];
 
   return (
-    <div className="relative">
+    <div className="relative w-screen">
       <div className="flex flex-col items-center justify-center px-[2cqh] py-[5cqw]">
         <canvas
           ref={trackImageCanvasSubscriber('album-art')}
-          className="shadow-albumart mb-[5cqi] h-auto max-w-[45cqw]"
+          className="mb-[5cqi] h-auto max-w-[45cqw] shadow-albumart"
           style={{
             width: trackImage.width,
             aspectRatio: `${trackImage.width} / ${trackImage.height}`,
           }}
         />
 
-        <h1 className="text-title mb-2 w-4/5 truncate font-bold leading-tight">
+        <h1 className="mb-2 w-[75cqw] truncate text-title font-bold leading-tight">
           {track.name}
         </h1>
-        <h2 className="text-meta mb-2 w-4/5 truncate font-medium italic leading-tight">
+        <h2 className="mb-2 w-[75cqw] truncate text-meta font-medium italic leading-tight">
           {track.album.name}
         </h2>
 
-        <h3 className="text-meta w-4/5 truncate font-medium leading-tight">
+        <h3 className="w-[65cqw] truncate break-words text-meta font-medium leading-tight">
           {track.artists.map((artist) => artist.name).join(', ')}
         </h3>
       </div>
       <div className="flex w-full flex-row items-center justify-center gap-5">
         <div
-          className="w-control min-w-control flex items-center justify-center gap-20 text-control font-bold"
+          className="flex w-control min-w-control items-center justify-center gap-20 text-control font-bold"
           onClick={() => {
             previous.mutate();
           }}
@@ -57,32 +60,32 @@ const Content: React.FC<ContentProps> = ({ track, isPlaying }) => {
           <FontAwesomeIcon icon={faBackwardFast} />
         </div>
         {isPlaying ? (
-          <div
-            className="w-control min-w-control flex items-center justify-center text-control font-bold"
+          <button
+            className="flex w-control min-w-control items-center justify-center text-control font-bold"
             onClick={() => {
               pausePlayback.mutate();
             }}
           >
             <FontAwesomeIcon icon={faPause} />
-          </div>
+          </button>
         ) : (
-          <div
-            className="w-control min-w-control flex items-center justify-center text-control font-bold"
+          <button
+            className="flex w-control min-w-control items-center justify-center text-control font-bold"
             onClick={() => {
               resumePlayback.mutate();
             }}
           >
             <FontAwesomeIcon icon={faPlay} />
-          </div>
+          </button>
         )}
-        <div
-          className="w-control min-w-control flex items-center justify-center text-control font-bold"
+        <button
+          className="flex w-control min-w-control items-center justify-center text-control font-bold"
           onClick={() => {
             next.mutate();
           }}
         >
           <FontAwesomeIcon icon={faForwardFast} />
-        </div>
+        </button>
       </div>
     </div>
   );

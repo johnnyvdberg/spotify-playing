@@ -1,30 +1,22 @@
 import React from 'react';
 
+import { useCurrentlyPlaying } from './CurrentlyPlayingContext.tsx';
 import Episode from './playing/Episode.tsx';
 import NoItem from './playing/NoItem.tsx';
 import Track from './track/Track.tsx';
 
-interface CurrentlyPlayingProps {
-  currentlyPlaying: SpotifyApi.CurrentlyPlayingObject;
-}
+const CurrentlyPlaying: React.FC = () => {
+  const { data: currentlyPlaying } = useCurrentlyPlaying();
 
-const CurrentlyPlaying: React.FC<CurrentlyPlayingProps> = ({
-  currentlyPlaying,
-}) => {
-  if (currentlyPlaying.currently_playing_type === 'track') {
-    if (currentlyPlaying.item) {
-      return (
-        <Track
-          track={currentlyPlaying.item as SpotifyApi.TrackObjectFull}
-          isPlaying={currentlyPlaying.is_playing}
-        />
-      );
+  if (currentlyPlaying?.currently_playing_type === 'track') {
+    if (currentlyPlaying?.item) {
+      return <Track />;
     }
 
     return <NoItem />;
   }
 
-  if (currentlyPlaying.currently_playing_type === 'episode') {
+  if (currentlyPlaying?.currently_playing_type === 'episode') {
     return (
       <Episode
         episode={currentlyPlaying.item as SpotifyApi.EpisodeObjectFull}
