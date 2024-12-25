@@ -4,6 +4,8 @@ interface ImportMetaEnv {
   readonly VITE_SPOTIFY_CLIENT_ID: string;
   readonly VITE_HA_TOKEN: string;
 
+  readonly VITE_PUBLIC_URL: string;
+
   readonly VITE_SCREEN_TIMEOUT: number;
   readonly VITE_SCREEN_URL: string;
   readonly VITE_ENABLE_SET_SCREEN_STATE: string;

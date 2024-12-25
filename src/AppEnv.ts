@@ -2,6 +2,8 @@ interface IAppEnv {
   readonly SPOTIFY_CLIENT_ID: string;
   readonly HA_TOKEN: string;
 
+  readonly PUBLIC_URL: string;
+
   readonly SCREEN_TIMEOUT: number;
   readonly SCREEN_URL: string;
   readonly ENABLE_SET_SCREEN_STATE: boolean;
@@ -24,6 +26,8 @@ interface IAppEnv {
 const AppEnv: IAppEnv = {
   SPOTIFY_CLIENT_ID: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
   HA_TOKEN: import.meta.env.VITE_HA_TOKEN,
+
+  PUBLIC_URL: import.meta.env.VITE_PUBLIC_URL,
 
   SCREEN_TIMEOUT: import.meta.env.VITE_SCREEN_TIMEOUT,
   SCREEN_URL: import.meta.env.VITE_SCREEN_URL,

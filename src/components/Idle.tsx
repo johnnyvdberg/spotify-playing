@@ -20,7 +20,7 @@ const Idle = () => {
         autoPlay
         muted
         loop
-        src={`http://localhost:5173/video/${activeVideo}.mp4`}
+        src={`${AppEnv.PUBLIC_URL}/video/${activeVideo}.mp4`}
       />
     </div>
   );
