@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Palette } from 'modern-palette';
 
-const useImageColor = (canvas: HTMLCanvasElement, loadedUrl: string | null) => {
+const useImageColor = (loadedUrl?: string) => {
   const [color, setColor] = useState<string | undefined>();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const useImageColor = (canvas: HTMLCanvasElement, loadedUrl: string | null) => {
 
     const palette = new Palette({
       maxColors: 4,
-      samples: [canvas],
+      samples: [loadedUrl],
     });
 
     // Generate palette colors data
@@ -34,7 +34,7 @@ const useImageColor = (canvas: HTMLCanvasElement, loadedUrl: string | null) => {
 
       setColor(selectedColor);
     });
-  }, [canvas, loadedUrl]);
+  }, [loadedUrl]);
 
   return color;
 };

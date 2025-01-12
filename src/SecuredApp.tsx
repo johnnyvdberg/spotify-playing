@@ -16,7 +16,8 @@ const authConfig: TAuthConfig = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
   tokenEndpoint: 'https://accounts.spotify.com/api/token',
   redirectUri: `${location.protocol}//${location.host}${location.pathname}`,
-  scope: 'user-read-currently-playing user-modify-playback-state',
+  scope:
+    'user-read-currently-playing user-modify-playback-state user-read-playback-position',
 
   // Spotify token not a JWT.
   decodeToken: false,

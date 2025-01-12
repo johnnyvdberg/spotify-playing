@@ -15,7 +15,7 @@ const useGetCurrentlyPlaying = (enable: boolean) => {
     queryFn: async () => {
       const response =
         await axios.get<SpotifyApi.CurrentlyPlayingObject | null>(
-          'https://api.spotify.com/v1/me/player/currently-playing',
+          'https://api.spotify.com/v1/me/player/currently-playing?additional_types=episode',
           {
             headers: { Authorization: `Bearer ${token}` },
           }

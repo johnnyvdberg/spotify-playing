@@ -1,14 +1,15 @@
 import React from 'react';
 
-import useTrackImageProvider from '../useTrackImageProvider.ts';
+import { useCurrentlyPlaying } from '../../CurrentlyPlayingContext.tsx';
 
 const BackgroundBlurred: React.FC = () => {
-  const { trackImageCanvasSubscriber } = useTrackImageProvider();
-
+  const { artSrc } = useCurrentlyPlaying();
   return (
-    <canvas
+    <img
+      src={artSrc}
       className="use-blur absolute bottom-0 left-0 right-0 top-0 size-full blur-3xl brightness-50"
-      ref={trackImageCanvasSubscriber('albumart-background')}
+      alt="background"
+      aria-hidden
     />
   );
 };

@@ -31,11 +31,18 @@ export const CurrentlyPlayingProvider: React.FC<ProviderProps> = ({
 export const useCurrentlyPlaying = () => {
   const context = useContext(CurrentlyPlayingContext);
 
-  const track = useMemo(
+  const track = useMemo(() => {
+    return context?.data?.item?.type === 'track'
+      ? context?.data?.item
+      : undefined;
+  }, [context?.data?.item?.id]);
+
+  const episode = useMemo(
     () =>
-      context?.data?.item?.type === 'track' ? context?.data?.item : undefined,
-    [context?.data?.item]
+      context?.data?.item?.type === 'episode' ? context?.data?.item : undefined,
+    [context?.data?.item?.id]
   );
+
   const durationMs = useMemo(
     () => context?.data?.item?.duration_ms,
     [context?.data?.item?.duration_ms]
@@ -44,6 +51,16 @@ export const useCurrentlyPlaying = () => {
     () => context?.data?.progress_ms ?? 0,
     [context?.data?.progress_ms]
   );
+
+  const artSrc = useMemo(() => {
+    if (context?.data?.item?.type === 'track') {
+      return context?.data?.item.album.images[0]?.url;
+    }
+    if (context?.data?.item?.type === 'episode') {
+      return context?.data?.item.images[0]?.url;
+    }
+    return undefined;
+  }, [context?.data?.item?.id]);
 
   const isPlaying = useMemo(() => {
     return context?.data?.is_playing ?? false;
@@ -56,8 +73,10 @@ export const useCurrentlyPlaying = () => {
   }
   return {
     track,
+    episode,
     durationMs,
     progressMs,
+    artSrc,
     isPlaying,
     isLoading: context.isLoading,
   };

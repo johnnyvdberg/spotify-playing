@@ -8,46 +8,31 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import useSpotifyMutations from '../../hooks/useSpotifyMutations.ts';
-import useTrackImageProvider from './useTrackImageProvider.ts';
+import { useCurrentlyPlaying } from '../CurrentlyPlayingContext.tsx';
 
-import TrackObjectFull = SpotifyApi.TrackObjectFull;
-
-interface ContentProps {
-  track?: TrackObjectFull;
-  isPlaying: boolean;
-}
-
-const Content: React.FC<ContentProps> = ({ track, isPlaying }) => {
-  const { trackImageCanvasSubscriber } = useTrackImageProvider();
+const Content: React.FC = () => {
+  const { track, episode, isPlaying, artSrc } = useCurrentlyPlaying();
   const { pausePlayback, resumePlayback, previous, next } =
     useSpotifyMutations();
-
-  if (!track) {
-    return <h1>Unknown state</h1>;
-  }
-  const trackImage = track.album.images[0];
 
   return (
     <div className="relative w-screen">
       <div className="flex flex-col items-center justify-center px-[2cqh] py-[5cqw]">
-        <canvas
-          ref={trackImageCanvasSubscriber('album-art')}
+        <img
           className="mb-[5cqi] h-auto max-w-[45cqw] shadow-albumart"
-          style={{
-            width: trackImage.width,
-            aspectRatio: `${trackImage.width} / ${trackImage.height}`,
-          }}
+          src={artSrc}
+          alt="Cover art"
         />
 
         <h1 className="mb-2 w-[75cqw] truncate text-title font-bold leading-tight">
-          {track.name}
+          {track?.name ?? episode?.name}
         </h1>
         <h2 className="mb-2 w-[75cqw] truncate text-meta font-medium italic leading-tight">
-          {track.album.name}
+          {track?.album.name ?? episode?.show.name}
         </h2>
 
         <h3 className="w-[65cqw] truncate break-words text-meta font-medium leading-tight">
-          {track.artists.map((artist) => artist.name).join(', ')}
+          {track?.artists.map((artist) => artist.name).join(', ')}
         </h3>
       </div>
       <div className="flex w-full flex-row items-center justify-center gap-5">

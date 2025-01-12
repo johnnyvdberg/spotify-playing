@@ -2,15 +2,12 @@ import React from 'react';
 
 import useImageColor from '../hooks/useImageColor.ts';
 import { useCurrentlyPlaying } from './CurrentlyPlayingContext.tsx';
-import useTrackImageProvider from './track/useTrackImageProvider.ts';
 
 const dashArray = 2 * Math.PI * 18;
 const ProgressBar: React.FC = () => {
-  const { progressMs, durationMs } = useCurrentlyPlaying();
+  const { progressMs, durationMs, artSrc } = useCurrentlyPlaying();
 
-  const { sourceCanvas, loadedUrl } = useTrackImageProvider();
-
-  const color = useImageColor(sourceCanvas, loadedUrl);
+  const color = useImageColor(artSrc);
 
   const progressDashOffset = // Dirty calculation, needed to keep the progressbar in check
     dashArray -
@@ -35,7 +32,7 @@ const ProgressBar: React.FC = () => {
           cy="18"
           r="18"
           fill="none"
-          className="duration-2000 stroke-current transition-all ease-linear"
+          className="stroke-current transition-all duration-2000 ease-linear"
           style={{
             color: color ?? '#000000',
           }}
