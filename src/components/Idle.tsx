@@ -9,7 +9,6 @@ const Idle = () => {
   );
 
   useInterval(() => {
-    console.log('next');
     setActiveVideo(randomInt(1, AppEnv.LAST_VIDEO_INDEX));
   }, 20_000);
 

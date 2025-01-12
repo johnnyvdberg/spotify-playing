@@ -7,19 +7,19 @@ import Idle from './components/Idle.tsx';
 import Status from './components/Status.tsx';
 
 const App = () => {
-  const { data: currentlyPlaying, isLoading } = useCurrentlyPlaying();
+  const { isPlaying, isLoading } = useCurrentlyPlaying();
 
   const [inactive, setValue] = useDebounceValue(false, 10_000);
 
   useEffect(() => {
-    setValue(!currentlyPlaying?.is_playing);
-  }, [currentlyPlaying?.is_playing, setValue]);
+    setValue(!isPlaying);
+  }, [isPlaying, setValue]);
 
   if (isLoading) {
     return <Status message="Loading" />;
   }
 
-  if ((!currentlyPlaying || inactive) && !currentlyPlaying?.is_playing) {
+  if ((!isPlaying || inactive) && !isPlaying) {
     return <Idle />;
   }
 

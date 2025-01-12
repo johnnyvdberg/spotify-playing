@@ -13,12 +13,7 @@ import TrackImageProvider from './TrackImageProvider.tsx';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 const Track: React.FC = () => {
-  const { data: currentlyPlaying } = useCurrentlyPlaying();
-
-  const track =
-    currentlyPlaying?.currently_playing_type === 'track'
-      ? (currentlyPlaying.item as TrackObjectFull)
-      : undefined;
+  const { track, isPlaying } = useCurrentlyPlaying();
 
   const { canvas, loadedUrl } = useImageCanvas(
     track?.album.images[0].url ?? imgUrl
@@ -44,10 +39,7 @@ const Track: React.FC = () => {
       <div className="relative flex h-screen w-screen items-center justify-center [container:currently-playing/inline-size]">
         {AppEnv.PLAYING_USE_BLUR ? <BackgroundBlurred /> : <BackgroundColor />}
         <ProgressBar />
-        <Content
-          track={cachedTrack}
-          isPlaying={currentlyPlaying?.is_playing ?? false}
-        />
+        <Content track={cachedTrack} isPlaying={isPlaying ?? false} />
       </div>
     </TrackImageProvider>
   );

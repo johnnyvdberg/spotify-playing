@@ -6,7 +6,7 @@ import useTrackImageProvider from './track/useTrackImageProvider.ts';
 
 const dashArray = 2 * Math.PI * 18;
 const ProgressBar: React.FC = () => {
-  const { data: currentlyPlaying } = useCurrentlyPlaying();
+  const { progressMs, durationMs } = useCurrentlyPlaying();
 
   const { sourceCanvas, loadedUrl } = useTrackImageProvider();
 
@@ -14,11 +14,7 @@ const ProgressBar: React.FC = () => {
 
   const progressDashOffset = // Dirty calculation, needed to keep the progressbar in check
     dashArray -
-    ((currentlyPlaying?.item?.duration_ms ?? 0) > 0
-      ? ((currentlyPlaying?.progress_ms ?? 0) /
-          (currentlyPlaying?.item?.duration_ms ?? 1)) *
-        dashArray
-      : 0);
+    ((durationMs ?? 0) > 0 ? (progressMs / (durationMs ?? 1)) * dashArray : 0);
   return (
     <div className="absolute size-full">
       <svg

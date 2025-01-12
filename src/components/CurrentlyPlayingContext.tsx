@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { UseQueryResult } from '@tanstack/react-query';
 
 import useGetCurrentlyPlaying from '../hooks/useGetCurrentlyPlaying.ts';
@@ -30,10 +30,35 @@ export const CurrentlyPlayingProvider: React.FC<ProviderProps> = ({
 
 export const useCurrentlyPlaying = () => {
   const context = useContext(CurrentlyPlayingContext);
+
+  const track = useMemo(
+    () =>
+      context?.data?.item?.type === 'track' ? context?.data?.item : undefined,
+    [context?.data?.item]
+  );
+  const durationMs = useMemo(
+    () => context?.data?.item?.duration_ms,
+    [context?.data?.item?.duration_ms]
+  );
+  const progressMs = useMemo(
+    () => context?.data?.progress_ms ?? 0,
+    [context?.data?.progress_ms]
+  );
+
+  const isPlaying = useMemo(() => {
+    return context?.data?.is_playing ?? false;
+  }, [context?.data?.is_playing]);
+
   if (context === undefined) {
     throw new Error(
       'useCurrentlyPlaying must be used within a CurrentlyPlayingProvider'
     );
   }
-  return context;
+  return {
+    track,
+    durationMs,
+    progressMs,
+    isPlaying,
+    isLoading: context.isLoading,
+  };
 };
