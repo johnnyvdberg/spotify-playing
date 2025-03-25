@@ -1,16 +1,9 @@
 import { useState } from 'react';
-import { useInterval } from 'usehooks-ts';
 
 import AppEnv from '../AppEnv.ts';
 
 const Idle = () => {
-  const [activeVideo, setActiveVideo] = useState(
-    randomInt(1, AppEnv.LAST_VIDEO_INDEX)
-  );
-
-  useInterval(() => {
-    setActiveVideo(randomInt(1, AppEnv.LAST_VIDEO_INDEX));
-  }, 20_000);
+  const [activeVideo] = useState(randomInt(1, AppEnv.LAST_VIDEO_INDEX));
 
   return (
     <div>

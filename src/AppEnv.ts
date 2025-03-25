@@ -9,6 +9,7 @@ interface IAppEnv {
   readonly ENABLE_SET_SCREEN_STATE: boolean;
 
   readonly SPOTIFY_INTERVAL: number;
+  readonly IDLE_INTERVAL: number;
 
   readonly HA_URL: string | null | undefined;
   readonly HA_ENTITY: string | null | undefined;
@@ -34,6 +35,7 @@ const AppEnv: IAppEnv = {
   ),
 
   SPOTIFY_INTERVAL: import.meta.env.VITE_SPOTIFY_INTERVAL,
+  IDLE_INTERVAL: import.meta.env.VITE_IDLE_INTERVAL,
 
   HA_URL: import.meta.env.VITE_HA_URL,
   HA_ENTITY: import.meta.env.VITE_HA_ENTITY,

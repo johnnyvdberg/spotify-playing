@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
-import { useDebounceValue } from 'usehooks-ts';
+import { useEffect, useState } from 'react';
+import { useTimeout } from 'usehooks-ts';
 
+import AppEnv from './AppEnv.ts';
 import CurrentlyPlaying from './components/CurrentlyPlaying.tsx';
 import { useCurrentlyPlaying } from './components/CurrentlyPlayingContext.tsx';
 import Idle from './components/Idle.tsx';
@@ -9,17 +10,24 @@ import Status from './components/Status.tsx';
 const App = () => {
   const { isPlaying, isLoading } = useCurrentlyPlaying();
 
-  const [inactive, setValue] = useDebounceValue(false, 10_000);
+  const [inactiveState, setInactiveState] = useState(false);
+
+  useTimeout(
+    () => setInactiveState(true),
+    isPlaying ? null : AppEnv.IDLE_INTERVAL
+  );
 
   useEffect(() => {
-    setValue(!isPlaying);
-  }, [isPlaying, setValue]);
+    if (isPlaying) {
+      setInactiveState(false);
+    }
+  }, [isPlaying]);
 
   if (isLoading) {
     return <Status message="Loading" />;
   }
 
-  if ((!isPlaying || inactive) && !isPlaying) {
+  if (!isPlaying && inactiveState) {
     return <Idle />;
   }
 
